@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: myrok
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+  profiles:
+    include: security
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 807494627981-5omeu9g6v0c1og94rnuj5qh4g2nfr8b6.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - email
+              - profile
