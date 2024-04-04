@@ -8,12 +8,12 @@ import java.time.LocalDate;
 
 @Transactional
 public interface ProjectService {
-    Long register(ProjectDto.RegisterProject requestDto);
+    Long register(ProjectDto requestDto);
 
     Long checkProjectDelete(Project project);
 
 
-    default Project dtoToEntity(ProjectDto.RegisterProject projectDto){
+    default Project dtoToEntity(ProjectDto projectDto){
         return Project.builder()
                 .projectName(projectDto.getProjectName())
                 .startDate(LocalDate.parse(projectDto.getStartDate()))
@@ -22,8 +22,8 @@ public interface ProjectService {
                 .build();
     }
 
-    default ProjectDto.RegisterProject entityToDto(Project project){
-        return ProjectDto.RegisterProject.builder()
+    default ProjectDto entityToDto(Project project){
+        return ProjectDto.builder()
                 .projectName(project.getProjectName())
                 .startDate(String.valueOf(project.getStartDate()))
                 .endDate(String.valueOf(project.getEndDate()))

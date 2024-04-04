@@ -34,35 +34,18 @@ public class ProjectController {
             description = "프로젝트 생성을 완료하였습니다."
     )
     @PostMapping("/")
-    public ResponseEntity<Object> createProject(Long memberId, @RequestBody ProjectDto.RegisterProject projectDto){
+    public ResponseEntity<Object> createProject(Long memberId, @RequestBody ProjectDto projectDto){
         memberService.checkMemberHaveProject(memberId);
         Long projectId = projectService.register(projectDto);
         Project project = memberService.registerProjectToMember(memberId, projectId);
         return ResponseEntity.ok().body(project.getId());
     }
 
-    @Operation(
-            summary = "프로젝트 참가",
-            description = "프로젝트에 참가합니다"
-    )
-    @ApiResponse(
-            responseCode = "200",
-            description = "프로젝트 참가를 완료하였습니다."
-    )
     @PostMapping("/participate")
     public ResponseEntity<Long> participateProject(Long memberId, String inviteCode){
         memberService.checkMemberHaveProject(memberId);
         return ResponseEntity.ok().body(memberService.participateProject(memberId, inviteCode).getId());
     }
-
-    @Operation(
-            summary = "프로젝트 나가기",
-            description = "프로젝트에서 나갑니다."
-    )
-    @ApiResponse(
-            responseCode = "200",
-            description = "프로젝트에서 나갔습니다."
-    )
     @DeleteMapping("/")
     public ResponseEntity<Long> getOutProject(Long memberId, Long projectId){
         Project project = memberService.getOutFromProject(memberId,projectId);

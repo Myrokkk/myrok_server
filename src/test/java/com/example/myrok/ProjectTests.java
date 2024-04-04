@@ -23,7 +23,7 @@ public class ProjectTests {
 
     @Test
     public void testRegister(){
-        ProjectDto.RegisterProject projectDto = ProjectDto.RegisterProject.builder()
+        ProjectDto projectDto = ProjectDto.builder()
                 .projectName("test name 1")
                 .startDate("2024-01-01")
                 .endDate("2025-01-01")
