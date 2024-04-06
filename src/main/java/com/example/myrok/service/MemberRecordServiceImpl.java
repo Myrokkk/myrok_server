@@ -37,8 +37,7 @@ public class MemberRecordServiceImpl implements MemberRecordService{
     public void delete(Long id){
         List<MemberRecord> memberRecords = memberRecordRepository.findAllByRecordId(id);
         for (MemberRecord memberRecord : memberRecords) {
-            memberRecord.delete();
-            memberRecordRepository.save(memberRecord);
+            memberRecordRepository.delete(memberRecord);
         }
     }
 }

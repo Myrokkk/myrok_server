@@ -26,8 +26,7 @@ public class RecordTagServiceImpl implements RecordTagService{
     public void delete(Long id){
         List<RecordTag> recordTags = recordTagRepository.findAllByRecordId(id);
         for (RecordTag recordTag : recordTags) {
-            recordTag.delete();
-            recordTagRepository.save(recordTag);
+            recordTagRepository.delete(recordTag);
         }
 
     }

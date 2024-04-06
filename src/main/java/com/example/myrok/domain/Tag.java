@@ -51,6 +51,5 @@ public class Tag {
 
     public void decrementCount(){ this.count -= 1; }
 
-    public void delete(){ this.deleted=true; }
 
 }

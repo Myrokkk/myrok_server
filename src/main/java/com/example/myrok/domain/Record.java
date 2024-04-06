@@ -61,8 +61,5 @@ public class Record extends BaseTimeEntity {
     @JoinColumn(name = "p_id")
     private Project project;
 
-    public void delete(){
-        this.deleted=true;
-    }
 
 }

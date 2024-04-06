@@ -36,9 +36,6 @@ public class RecordTag {
     @Builder.Default
     private Boolean deleted = false;
 
-    public void delete(){
-        this.deleted=true;
-    }
 
 
 

@@ -29,10 +29,10 @@ public class TagServiceImpl implements TagService{
         //deleted 여부도 검사해야될듯
         for (Tag tag : tagList) {
             tag.decrementCount();
-            if (tag.getCount() == 0) {
-                tag.delete();
-            }
             tagRepository.save(tag);
+            if (tag.getCount() == 0) {
+                tagRepository.delete(tag);
+            }
         }
 
     }

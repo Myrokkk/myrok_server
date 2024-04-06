@@ -76,8 +76,7 @@ public class RecordServiceImpl implements RecordService{
             // 회의록 삭제
             Record record = recordRepository.findById(id)
                     .orElseThrow(() -> new NotFoundException("해당 회의록을 찾을 수 없습니다. ID: "+id));
-            record.delete();
-            recordRepository.save(record);
+            recordRepository.delete(record);
 
             //회의록 안의 태그 리스트 삭제
             tagService.delete(record.getTagList());

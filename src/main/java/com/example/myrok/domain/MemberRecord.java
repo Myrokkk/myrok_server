@@ -40,7 +40,4 @@ public class MemberRecord {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public void delete(){
-        this.deleted=true;
-    }
 }
