@@ -5,6 +5,7 @@ import com.example.myrok.domain.Record;
 import com.example.myrok.dto.RecordDTO;
 import com.example.myrok.exception.NotFoundException;
 import com.example.myrok.repository.*;
+import com.example.myrok.type.Role;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,8 +42,9 @@ public class RecordServiceImpl implements RecordService{
 
         // 멤버 리스트 & 태그 리스트 받아와서 Record 저장
         List<String> tags = recordDTO.tagList();
-        List<Long> members=recordDTO.memberList();
-        Long projectId=recordDTO.projectId();
+        List<Long> members = recordDTO.memberList();
+        Long projectId = recordDTO.projectId();
+
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new NotFoundException("해당 프로젝트를 찾을 수 없습니다. ID: " + projectId));
 
@@ -57,9 +59,12 @@ public class RecordServiceImpl implements RecordService{
             // record 와 tag 매핑객체 생성
             recordTagService.save(record,tag);
         }
-
-        // Member 와 Record 매핑
-        memberRecordService.save(members,record);
+        // 멤버 권한 지정 및 매핑객체 생성
+        Long recordWriterId=recordDTO.recordWriterId();
+        for (Long memberId : members) {
+            Role role = memberId.equals(recordWriterId) ? Role.ADMIN : Role.PARTICIPANT;
+            memberRecordService.save(members, record, role);
+        }
 
         return savedRecord;
     }
