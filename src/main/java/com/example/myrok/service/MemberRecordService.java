@@ -7,6 +7,6 @@ import com.example.myrok.type.Role;
 import java.util.List;
 
 public interface MemberRecordService {
-    void save(List<Long> members, Record record, Role role);
+    void save(List<Long> members, Record record, Long recordWriterId);
     void delete(Long id);
 }

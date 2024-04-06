@@ -20,11 +20,11 @@ public class MemberRecordServiceImpl implements MemberRecordService{
     @Autowired
     MemberRepository memberRepository;
     @Override
-    public void save(List<Long> members, Record record, Role role){
+    public void save(List<Long> members, Record record, Long recordWriterId){
         for (Long memberId : members) {
             Member member = memberRepository.findById(memberId)
                     .orElseThrow(() -> new NotFoundException("존재하지 않는 팀원입니다."));
-
+            Role role = memberId.equals(recordWriterId) ? Role.ADMIN : Role.PARTICIPANT;
             MemberRecord memberRecord = MemberRecord.builder()
                     .record(record)
                     .member(member)

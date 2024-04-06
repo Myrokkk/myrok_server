@@ -44,6 +44,7 @@ public class RecordServiceImpl implements RecordService{
         List<String> tags = recordDTO.tagList();
         List<Long> members = recordDTO.memberList();
         Long projectId = recordDTO.projectId();
+        Long recordWriterId=recordDTO.recordWriterId();
 
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new NotFoundException("해당 프로젝트를 찾을 수 없습니다. ID: " + projectId));
@@ -60,11 +61,9 @@ public class RecordServiceImpl implements RecordService{
             recordTagService.save(record,tag);
         }
         // 멤버 권한 지정 및 매핑객체 생성
-        Long recordWriterId=recordDTO.recordWriterId();
-        for (Long memberId : members) {
-            Role role = memberId.equals(recordWriterId) ? Role.ADMIN : Role.PARTICIPANT;
-            memberRecordService.save(members, record, role);
-        }
+
+        memberRecordService.save(members, record,recordWriterId);
+
 
         return savedRecord;
     }
