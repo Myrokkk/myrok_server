@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.util.List;
 
@@ -15,6 +17,8 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@SQLDelete(sql="UPDATE tb_tag SET is_deleted=true WHERE t_id=?")
+@Where(clause = "is_deleted = false")
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -5,6 +5,8 @@ import com.example.myrok.type.Role;
 import jakarta.persistence.*;
 import jdk.jfr.Description;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "tb_member")
@@ -12,6 +14,8 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@SQLDelete(sql="UPDATE tb_member SET is_deleted=true WHERE m_id=?")
+@Where(clause = "is_deleted = false")
 public class Member {
 
     @Id

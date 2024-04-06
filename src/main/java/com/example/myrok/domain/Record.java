@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jdk.jfr.Description;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,6 +17,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
+@SQLDelete(sql="UPDATE tb_record SET is_deleted=true WHERE r_id=?")
+@Where(clause = "is_deleted = false")
 public class Record extends BaseTimeEntity {
 
     @Id
