@@ -33,4 +33,12 @@ public class OpenAiTests {
                 .build();
         clovaSummary.makeRecordSummary(requestDto);
     }
+
+    @Test
+    public void getSummary() throws JsonProcessingException, JSONException {
+        ClovaDto.RecordRequestDto requestDto = ClovaDto.RecordRequestDto.builder()
+                .id(4L)
+                .build();
+        clovaSummary.getSummaryRecord(4L);
+    }
 }

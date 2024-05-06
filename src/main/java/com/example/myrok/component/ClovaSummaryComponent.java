@@ -21,7 +21,7 @@ public class ClovaSummaryComponent {
     @Value("${naver.clova.api.secret}")
     public String secretKey;
 
-    public ClovaDto.ResponseDto get(ClovaDto.RequestDto requestDto){
+    public String get(ClovaDto.RequestDto requestDto){
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
@@ -55,9 +55,7 @@ public class ClovaSummaryComponent {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             JsonNode jsonNode = objectMapper.readTree(response.getBody());
-            return ClovaDto.ResponseDto.builder()
-                    .summary(String.valueOf(jsonNode.get("summary")))
-                    .build();
+            return String.valueOf(jsonNode.get("summary"));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

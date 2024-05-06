@@ -27,9 +27,20 @@ public class RecordSummaryServiceImpl implements RecordSummaryService{
                 .title(record.getRecordName())
                 .content(record.getRecordContent())
                 .build();
-        ClovaDto.ResponseDto responseDto = clovaSummaryComponent.get(requestSummary);
-        record.updateSummary(responseDto.getSummary());
+        String summary = clovaSummaryComponent.get(requestSummary);
+        record.updateSummary(summary);
 
         return recordRepository.save(record).getId();
+    }
+
+    @Override
+    public ClovaDto.ResponseDto getSummaryRecord(Long recordId) {
+        Record record = recordRepository.findById(recordId)
+                .orElseThrow(() -> new NoSuchElementException("No record found with ID: " + recordId));
+
+        return ClovaDto.ResponseDto.builder()
+                .id(record.getId())
+                .summary(record.getRecordContentSummary())
+                .build();
     }
 }

@@ -48,7 +48,20 @@ public class RecordController {
             description = "회의록이 요약 되었습니다."
     )
     @PostMapping("/record/summary")
-    public ResponseEntity<Long> getOutProject(@RequestBody ClovaDto.RecordRequestDto requestDto) {
+    public ResponseEntity<Long> summary(@RequestBody ClovaDto.RecordRequestDto requestDto) {
         return new ResponseEntity<>(recordSummaryService.makeRecordSummary(requestDto), HttpStatus.CREATED);
+    }
+
+    @Operation(
+            summary = "요약된 회의록을 가져옵니다.",
+            description = "요약된 회의록을 가져옵니다."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "요약된 회의록을 가져왔습니다."
+    )
+    @GetMapping("/record/summary")
+    public ResponseEntity<ClovaDto.ResponseDto> getSummary(Long recordId) {
+        return new ResponseEntity<>(recordSummaryService.getSummaryRecord(recordId), HttpStatus.CREATED);
     }
 }
