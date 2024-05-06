@@ -1,4 +1,4 @@
-package com.example.myrok.service.openAi;
+package com.example.myrok.service.openapi;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -9,17 +9,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 @Service
-public class OpenAi {
+public class OpenAIService {
 
     public static String threadId;
     public static String assistentId;

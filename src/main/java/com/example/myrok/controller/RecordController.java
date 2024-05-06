@@ -1,8 +1,12 @@
 package com.example.myrok.controller;
 
 import com.example.myrok.domain.Record;
+import com.example.myrok.dto.ClovaDto;
 import com.example.myrok.dto.RecordDTO;
 import com.example.myrok.service.RecordService;
+import com.example.myrok.service.openapi.RecordSummaryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class RecordController {
     @Autowired
     private final RecordService recordService;
+    private final RecordSummaryService recordSummaryService;
 
     // 회의록 작성 이동
     @GetMapping("/records")
@@ -32,5 +37,18 @@ public class RecordController {
     public ResponseEntity<Record> delete(@PathVariable("recordId") Long id){
         recordService.deleteUpdate(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(
+            summary = "회의록을 요약합니다.",
+            description = "회의록을 요약합니다."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "회의록이 요약 되었습니다."
+    )
+    @PostMapping("/record/summary")
+    public ResponseEntity<Long> getOutProject(@RequestBody ClovaDto.RecordRequestDto requestDto) {
+        return new ResponseEntity<>(recordSummaryService.makeRecordSummary(requestDto), HttpStatus.CREATED);
     }
 }

@@ -8,6 +8,15 @@ public class ClovaDto {
     @NoArgsConstructor
     @Builder
     @AllArgsConstructor
+    public static class RecordRequestDto{
+        //회의록 아이디
+        private Long id;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @Builder
+    @AllArgsConstructor
     public static class RequestDto{
         @NotEmpty
         private String title;
@@ -20,6 +29,8 @@ public class ClovaDto {
     @Builder
     @AllArgsConstructor
     public static class ResponseDto{
+        //회의록 아이디
+        private Long id;
         @NotEmpty
         private String summary;
     }
