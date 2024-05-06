@@ -30,16 +30,20 @@ public class MemberRecordServiceImpl implements MemberRecordService{
     public List<MemberRecord> save(List<Long> members, Record record, Long recordWriterId){
         List<MemberRecord> memberRecordList= new ArrayList<>();
         for (Long memberId : members) {
+            
             Member member = memberRepository.findById(memberId)
                     .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 멤버입니다. id: " + memberId));
+
             // 멤버가 소속된 프로젝트가 있는지 확인
-            MemberProject memberProject=memberProjectRepository.findByMember(member)
+            MemberProject isMemberInProject=memberProjectRepository.findByMember(member)
                     .orElseThrow(() -> new EntityNotFoundException("소속된 프로젝트가 없는 멤버입니다. id: " + memberId));
+
             // 멤버가 해당 프로젝트 소속인지 확인
-            if(!record.getProject().getId().equals(memberProject.getProject().getId())
-            || memberProject.getMemberProjectType()== MemberProjectType.NON_PROJECT_MEMBER){
-                throw new CustomException(ErrorCode.MEMBER_NOT_IN_PROJECT, HttpStatus.BAD_REQUEST);
-            }
+            Long projectId = record.getProject().getId();
+            MemberProject memberProject =
+                    memberProjectRepository.findByMemberIdAndProjectIdAndMemberProjectType(memberId,projectId,MemberProjectType.PROJECT_MEMBER)
+                    .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_IN_PROJECT, HttpStatus.BAD_REQUEST));
+
             // 멤버별 권한 부여
             Role role = memberId.equals(recordWriterId) ? Role.ADMIN : Role.PARTICIPANT;
             MemberRecord memberRecord = MemberRecord.builder()
@@ -47,6 +51,7 @@ public class MemberRecordServiceImpl implements MemberRecordService{
                     .member(member)
                     .role(role)
                     .build();
+
             MemberRecord savedMemberRecord = memberRecordRepository.save(memberRecord);
             memberRecordList.add(savedMemberRecord);
         }
