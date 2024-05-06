@@ -17,11 +17,18 @@ public class RecordSummaryServiceImpl implements RecordSummaryService{
     private final RecordRepository recordRepository;
     private final ClovaSummaryComponent clovaSummaryComponent;
 
+
     @Override
     public Long makeRecordSummary(ClovaDto.RecordRequestDto requestDto) {
         Long recordId = requestDto.getId();
         Record record = recordRepository.findById(recordId)
                 .orElseThrow(() -> new NoSuchElementException("No record found with ID: " + recordId));
+        String content = record.getRecordContent();
+        System.out.println(content.length());
+        if(content.length()>1000){
+          throw new IllegalArgumentException("1000자 이상임");
+        }
+
         ClovaDto.RequestDto requestSummary = ClovaDto.RequestDto
                 .builder()
                 .title(record.getRecordName())

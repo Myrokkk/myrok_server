@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jdk.jfr.Description;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.util.List;
