@@ -16,7 +16,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Tag(name = "Project", description = "Project 관련 API 입니다.")
@@ -83,5 +88,12 @@ public class ProjectController {
     @PostMapping("/summary")
     public ResponseEntity<ClovaDto.ResponseDto> getOutProject(@RequestBody ClovaDto.RequestDto requestDto) {
         return ResponseEntity.ok().body(clovaSummary.get(requestDto));
+    }
+
+
+    @PreAuthorize("isAuthenticated")
+    @GetMapping("/")
+    public OAuth2User home(@AuthenticationPrincipal OAuth2User user) {
+        return user;
     }
 }
