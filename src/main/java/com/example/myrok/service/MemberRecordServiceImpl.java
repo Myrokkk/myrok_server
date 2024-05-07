@@ -27,16 +27,12 @@ public class MemberRecordServiceImpl implements MemberRecordService{
     @Autowired
     MemberRepository memberRepository;
     @Override
-    public List<MemberRecord> save(List<Long> members, Record record, Long recordWriterId){
+    public void save(List<Long> members, Record record, Long recordWriterId){
         List<MemberRecord> memberRecordList= new ArrayList<>();
         for (Long memberId : members) {
-            
+
             Member member = memberRepository.findById(memberId)
                     .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 멤버입니다. id: " + memberId));
-
-            // 멤버가 소속된 프로젝트가 있는지 확인
-            MemberProject isMemberInProject=memberProjectRepository.findByMember(member)
-                    .orElseThrow(() -> new EntityNotFoundException("소속된 프로젝트가 없는 멤버입니다. id: " + memberId));
 
             // 멤버가 해당 프로젝트 소속인지 확인
             Long projectId = record.getProject().getId();
@@ -52,10 +48,8 @@ public class MemberRecordServiceImpl implements MemberRecordService{
                     .role(role)
                     .build();
 
-            MemberRecord savedMemberRecord = memberRecordRepository.save(memberRecord);
-            memberRecordList.add(savedMemberRecord);
+            memberRecordRepository.save(memberRecord);
         }
-        return memberRecordList;
     }
     @Override
     public void delete(Long id){
