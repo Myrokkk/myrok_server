@@ -1,6 +1,6 @@
 package com.example.myrok.component;
 
-import com.example.myrok.controller.RecordSavedEvent;
+import com.example.myrok.event.RecordSavedEvent;
 import com.example.myrok.domain.Record;
 import com.example.myrok.dto.ClovaDto;
 import com.example.myrok.service.openapi.RecordSummaryService;

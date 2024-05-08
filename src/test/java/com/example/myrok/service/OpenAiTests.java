@@ -1,6 +1,6 @@
 package com.example.myrok.service;
 
-import com.example.myrok.controller.RecordSavedEvent;
+import com.example.myrok.event.RecordSavedEvent;
 import com.example.myrok.domain.Record;
 import com.example.myrok.dto.ClovaDto;
 import com.example.myrok.repository.RecordRepository;
@@ -14,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationEventPublisher;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @SpringBootTest
 public class OpenAiTests {

@@ -1,6 +1,6 @@
 package com.example.myrok.service;
 
-import com.example.myrok.controller.RecordSavedEvent;
+import com.example.myrok.event.RecordSavedEvent;
 import com.example.myrok.domain.*;
 import com.example.myrok.domain.Record;
 import com.example.myrok.dto.RecordDTO;
@@ -8,8 +8,6 @@ import com.example.myrok.exception.CustomException;
 import com.example.myrok.repository.*;
 import com.example.myrok.type.ErrorCode;
 import jakarta.persistence.EntityNotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
