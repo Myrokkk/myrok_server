@@ -30,7 +30,7 @@ public class ClovaDto {
     @AllArgsConstructor
     public static class ResponseDto{
         //회의록 아이디
-        private Long id;
+        private Long summaryId;
         @NotEmpty
         private String summary;
     }

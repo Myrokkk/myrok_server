@@ -3,7 +3,6 @@ package com.example.myrok.service.openapi;
 import com.example.myrok.component.ClovaSummaryComponent;
 import com.example.myrok.domain.Record;
 import com.example.myrok.dto.ClovaDto;
-import com.example.myrok.repository.MemberProjectRepository;
 import com.example.myrok.repository.RecordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -46,7 +45,7 @@ public class RecordSummaryServiceImpl implements RecordSummaryService{
                 .orElseThrow(() -> new NoSuchElementException("No record found with ID: " + recordId));
 
         return ClovaDto.ResponseDto.builder()
-                .id(record.getId())
+                .summaryId(record.getId())
                 .summary(record.getRecordContentSummary())
                 .build();
     }
