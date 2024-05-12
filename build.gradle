@@ -61,10 +61,10 @@ dependencies {
 
     //swagger
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'com.vaadin.external.google:android-json:0.0.20131108.vaadin1'
 
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    //security 설정 추가
     implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.security:spring-security-test'
 
