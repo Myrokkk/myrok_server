@@ -1,6 +1,7 @@
 package com.example.myrok.config;
 
 
+import com.example.myrok.security.handler.APILoginFailHandler;
 import com.example.myrok.security.handler.APILoginSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -41,8 +42,8 @@ public class SecurityConfig {
 
         http.formLogin(config -> {
             config.loginPage("/api/member/login");
-            //config.successHandler(new APILoginSuccessHandler());
-            //config.failureHandler(new APILoginFailHandler());
+            config.successHandler(new APILoginSuccessHandler());
+            config.failureHandler(new APILoginFailHandler());
         });
 //
 //        http.addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class); //JWT체크
