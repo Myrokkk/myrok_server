@@ -23,9 +23,9 @@ public class MemberDto extends User {
     private String imgUrl;
     //화면쪽에서 처리하기 쉽게
     //MemberProject타입이 아닌 String타입으로 지정
-    private List<String> memberProjects;
+    private List<MemberProject> memberProjects;
 
-    public MemberDto(Long id, String name, String socialId, String password, boolean deleted, String imgUrl, List<String> memberProjects) {
+    public MemberDto(Long id, String name, String socialId, String password, boolean deleted, String imgUrl, List<MemberProject> memberProjects) {
         super(
                 name,
                 password,

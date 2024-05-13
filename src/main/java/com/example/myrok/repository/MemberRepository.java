@@ -13,4 +13,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     List<Member> findAllByIdIn(List<Long> memberList);
 
     //Member getWithRoles(String username);
+
+    Member findByName(String username);
 }

@@ -26,28 +26,27 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         log.info("----------------loadUserByUsername----------------"+ username);
 
-//        Member member = memberRepository.getWithRoles(username);
-//
-//        if(member == null){
-//            throw new UsernameNotFoundException("Not Found");
-//        }
+        Member member = memberRepository.findByName(username);
 
-//        MemberDto memberDto = new MemberDto(
-//                member.getId(),
-//                member.getName(),
-//                member.getSocialId(),
-//                member.getPassword(),
-//                member.getDeleted(),
-//                member.getImgUrl(),
+        if(member == null){
+            throw new UsernameNotFoundException("Not Found");
+        }
+
+        MemberDto memberDto = new MemberDto(
+                member.getId(),
+                member.getName(),
+                member.getSocialId(),
+                member.getPassword(),
+                member.getDeleted(),
+                member.getImgUrl(),
+                member.getMemberProjects());
 //                member.getMemberProjects()
-////                member.getMemberProjects()
-////                        .stream()
-////                        .map(memberProjects -> memberProjects.id()).collect(Collectors.toList())
+//                        .stream()
+//                        .map(memberProjects -> memberProjects.project()).collect(Collectors.toList())
 //                       );
-//
-//        log.info(memberDto);
-//
-//        return memberDto;
-        return null;
+
+        log.info(memberDto);
+
+        return memberDto;
     }
 }

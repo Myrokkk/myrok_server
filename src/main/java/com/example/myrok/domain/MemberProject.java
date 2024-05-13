@@ -34,4 +34,5 @@ public class MemberProject {
     public void changeMemberProjectType(MemberProjectType memberProjectType){
         this.memberProjectType = memberProjectType;
     }
+
 }
