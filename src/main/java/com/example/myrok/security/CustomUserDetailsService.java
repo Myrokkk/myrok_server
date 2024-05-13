@@ -26,7 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         log.info("----------------loadUserByUsername----------------"+ username);
 
-        Member member = memberRepository.findByName(username);
+        Member member = memberRepository.getWithRoles(username);
 
         if(member == null){
             throw new UsernameNotFoundException("Not Found");
@@ -39,7 +39,11 @@ public class CustomUserDetailsService implements UserDetailsService {
                 member.getPassword(),
                 member.getDeleted(),
                 member.getImgUrl(),
-                member.getMemberProjects());
+                member.getMemberRoleList()
+                .stream()
+                .map(memberRole -> memberRole.name()).collect(Collectors.toList()));
+
+        //member.getMemberProjects());
 //                member.getMemberProjects()
 //                        .stream()
 //                        .map(memberProjects -> memberProjects.project()).collect(Collectors.toList())
@@ -48,5 +52,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         log.info(memberDto);
 
         return memberDto;
+
     }
 }

@@ -1,5 +1,6 @@
 package com.example.myrok.type;
 
+import com.example.myrok.domain.MemberProject;
 import lombok.Getter;
 
 @Getter
@@ -12,4 +13,5 @@ public enum MemberProjectType {
     MemberProjectType(String status) {
         this.value = status;
     }
+
 }

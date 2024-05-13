@@ -5,8 +5,10 @@ import com.example.myrok.type.Role;
 import jakarta.persistence.*;
 import jdk.jfr.Description;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_member")
@@ -42,5 +44,32 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<MemberProject> memberProjects;
 
+    @ElementCollection(fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<Role> memberRoleList = new ArrayList<>();
+
+    public void addRole(Role memberRole){
+
+        memberRoleList.add(memberRole);
+    }
+
+    public void clearRole() {
+        memberRoleList.clear();
+    }
+
+//    public List<MemberProject> getMemberProjects() {
+//        return getMemberProjects().stream()
+//                .map(MemberProject::getMemberProject)
+//                .toList();
+//    }
+
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        Set<GrantedAuthority> roles = new HashSet<>();
+//        for (String role : memberProjects.split(",")) {
+//            roles.add(new SimpleGrantedAuthority(role));
+//        }
+//        return roles;
+//    }
 
 }

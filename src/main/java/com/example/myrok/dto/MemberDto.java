@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,13 +24,16 @@ public class MemberDto extends User {
     private String imgUrl;
     //화면쪽에서 처리하기 쉽게
     //MemberProject타입이 아닌 String타입으로 지정
-    private List<MemberProject> memberProjects;
+    //private List<MemberProject> memberProjects;
+    private List<String> roleNames = new ArrayList<>();
 
-    public MemberDto(Long id, String name, String socialId, String password, boolean deleted, String imgUrl, List<MemberProject> memberProjects) {
+    public MemberDto(Long id, String name, String socialId, String password, boolean deleted, String imgUrl, List<String> roleNames)
+                     //List<MemberProject> memberProjects
+                     {
         super(
                 name,
                 password,
-                memberProjects.stream().map(str -> new SimpleGrantedAuthority("ROLE_" + str)).collect(Collectors.toList()));
+                roleNames.stream().map(str -> new SimpleGrantedAuthority("ROLE_" + str)).collect(Collectors.toList()));
 
         this.id = id;
         this.name = name;
@@ -37,7 +41,8 @@ public class MemberDto extends User {
         this.password = password;
         this.deleted = deleted;
         this.imgUrl = imgUrl;
-        this.memberProjects = memberProjects;
+        this.roleNames = roleNames;
+        //this.memberProjects = new ArrayList<>();
         }
 
     public Map<String, Object> getClaims() {
@@ -49,7 +54,8 @@ public class MemberDto extends User {
         dataMap.put("password", password);
         dataMap.put("deleted", deleted);
         dataMap.put("imgUrl", imgUrl);
-        dataMap.put("memberProjects", memberProjects);
+        //dataMap.put("memberProjects", memberProjects);
+        dataMap.put("roleNames", roleNames);
 
         return dataMap;
     }
