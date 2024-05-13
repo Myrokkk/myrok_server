@@ -36,11 +36,11 @@ public class SecurityConfig {
 
         http.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable());
 
-//        http.formLogin(config -> {
-//            config.loginPage("/api/member/login");
-//            config.successHandler(new APILoginSuccessHandler());
-//            config.failureHandler(new APILoginFailHandler());
-//        });
+        http.formLogin(config -> {
+            config.loginPage("/api/member/login");
+            //config.successHandler(new APILoginSuccessHandler());
+            //config.failureHandler(new APILoginFailHandler());
+        });
 //
 //        http.addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class); //JWT체크
 //
