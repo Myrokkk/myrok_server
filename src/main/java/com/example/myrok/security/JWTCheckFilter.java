@@ -50,7 +50,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 
             log.info("JWT claims: " + claims);
 
-            filterChain.doFilter(request, response); //이하 추가
+            filterChain.doFilter(request, response);
 
         }catch(Exception e){
 
