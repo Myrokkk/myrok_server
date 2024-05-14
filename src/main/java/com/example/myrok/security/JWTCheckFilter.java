@@ -1,5 +1,7 @@
 package com.example.myrok.security;
 
+import com.example.myrok.util.JWTUtil;
+import com.google.gson.Gson;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,6 +10,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Map;
 
 @Log4j2
 public class JWTCheckFilter extends OncePerRequestFilter {
@@ -35,7 +39,32 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         log.info("---doFilterInternal---");
         log.info("----------------------");
 
-        //test
-        filterChain.doFilter(request, response);
+        String authHeaderStr = request.getHeader("Authorization");
+
+        //앞이 Bearer+공백까지 7글자이고 그 다음부터가 JWT 문자열
+        //앞에 7개를 잘라내기
+        try {
+            //Bearer accestoken...
+            String accessToken = authHeaderStr.substring(7);
+            Map<String, Object> claims = JWTUtil.validateToken(accessToken);
+
+            log.info("JWT claims: " + claims);
+
+            filterChain.doFilter(request, response); //이하 추가
+
+        }catch(Exception e){
+
+            log.error("JWT Check Error..............");
+            log.error(e.getMessage());
+
+            Gson gson = new Gson();
+            String msg = gson.toJson(Map.of("error", "ERROR_ACCESS_TOKEN"));
+
+            response.setContentType("application/json");
+            PrintWriter printWriter = response.getWriter();
+            printWriter.println(msg);
+            printWriter.close();
+
+        }
     }
 }
