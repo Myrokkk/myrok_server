@@ -7,6 +7,7 @@ import jdk.jfr.Description;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
 
@@ -16,14 +17,14 @@ import java.util.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Member {
+public class Member implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "m_id")
     private Long id;
 
-    private String name;
+    private String username;
 
     @Description("소셜로그인 인증 후 받는 로그인정보")
     @Column(name = "social_id")
@@ -44,18 +45,37 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<MemberProject> memberProjects;
 
-    @ElementCollection(fetch = FetchType.LAZY)
-    @Builder.Default
-    private List<Role> memberRoleList = new ArrayList<>();
-
-    public void addRole(Role memberRole){
-
-        memberRoleList.add(memberRole);
+    @Override //권한 반환
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(("user")));
     }
 
-    public void clearRole() {
-        memberRoleList.clear();
+//    @Override
+//    public String getUsername() {
+//        return getName();
+//    }
+
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
     }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
+
 
 //    public List<MemberProject> getMemberProjects() {
 //        return getMemberProjects().stream()
