@@ -5,6 +5,7 @@ import com.example.myrok.jwt.JWTFilter;
 import com.example.myrok.oauth2.CustomSuccessHandler;
 import com.example.myrok.service.CustomOAuth2UserService;
 import com.example.myrok.jwt.JWTUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +23,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 
 @Configuration
@@ -42,6 +44,28 @@ public class SecurityConfig {
 
         log.info("---------------------security config---------------------------");
 
+        http
+                .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
+
+                    @Override
+                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+
+                        CorsConfiguration configuration = new CorsConfiguration();
+
+                        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+                        configuration.setAllowedMethods(Collections.singletonList("*"));
+                        configuration.setAllowCredentials(true);
+                        configuration.setAllowedHeaders(Collections.singletonList("*"));
+                        configuration.setMaxAge(3600L);
+
+                        configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
+                        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
+
+                        return configuration;
+                    }
+                }));
+
+
         //csrf disable
         http
                 .csrf(AbstractHttpConfigurer::disable);
@@ -52,7 +76,6 @@ public class SecurityConfig {
 //            config.loginPage("/api/member/login");
 //            config.successHandler(new APILoginSuccessHandler());
 //            config.failureHandler(new APILoginFailHandler());
-//            config.disable();
 //        });
 
         //HTTP Basic 인증 방식 disable
@@ -82,29 +105,6 @@ public class SecurityConfig {
         http
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-
-
-//        http.cors(httpSecurityCorsConfigurer -> {
-//            httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource());
-//        });
-//
-//        http.sessionManagement(httpSecuritySessionManagementConfigurer ->
-//                httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.NEVER));
-//
-//        http.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable());
-
-
-//        http.exceptionHandling(config -> {
-//            config.accessDeniedHandler(new CustomAccessDeniedHandler());
-//        });
-
-
-//        // 원래 스프링 시큐리티 필터 순서가 LogoutFilter 이후에 로그인 필터 동작
-//        // 따라서, LogoutFilter 이후에 우리가 만든 필터 동작하도록 설정
-//        // 순서 : LogoutFilter -> JwtAuthenticationProcessingFilter -> CustomJsonUsernamePasswordAuthenticationFilter
-//        http.addFilterAfter(customJsonUsernamePasswordAuthenticationFilter(), LogoutFilter.class);
-//        http.addFilterBefore(jwtAuthenticationProcessingFilter(), CustomJsonUsernamePasswordAuthenticationFilter.class);
 
 
         return http.build();
