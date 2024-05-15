@@ -7,6 +7,7 @@ import jdk.jfr.Description;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
@@ -17,14 +18,14 @@ import java.util.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Member implements UserDetails {
+public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "m_id")
     private Long id;
 
-    private String username;
+    private String name;
 
     @Description("소셜로그인 인증 후 받는 로그인정보")
     @Column(name = "social_id")
@@ -44,52 +45,5 @@ public class Member implements UserDetails {
 
     @OneToMany(mappedBy = "member")
     private List<MemberProject> memberProjects;
-
-    @Override //권한 반환
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(("user")));
-    }
-
-//    @Override
-//    public String getUsername() {
-//        return getName();
-//    }
-
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }
-
-
-//    public List<MemberProject> getMemberProjects() {
-//        return getMemberProjects().stream()
-//                .map(MemberProject::getMemberProject)
-//                .toList();
-//    }
-
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        Set<GrantedAuthority> roles = new HashSet<>();
-//        for (String role : memberProjects.split(",")) {
-//            roles.add(new SimpleGrantedAuthority(role));
-//        }
-//        return roles;
-//    }
 
 }

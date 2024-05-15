@@ -66,7 +66,7 @@ public class ProjectServiceImpl implements ProjectService{
                 .map(memberProject -> {
                     return MemberDto.MemberNameDto.builder()
                             .memberId(memberProject.getMember().getId())
-                            .name(memberProject.getMember().getUsername())
+                            .name(memberProject.getMember().getName())
                             .build();
                 }).collect(Collectors.toList());
         return ProjectDto.ProjectMembersDto.builder()

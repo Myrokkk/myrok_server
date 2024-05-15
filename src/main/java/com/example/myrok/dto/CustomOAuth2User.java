@@ -50,31 +50,4 @@ public class CustomOAuth2User implements OAuth2User {
         return userDto.getUsername();
     }
 
-//    private final MemberDto memberDto;
-//
-//    private MemberRecord memberRecord;
-//
-//    public CustomOAuth2User(MemberDto memberDto) {
-//
-//        this.memberDto = memberDto;
-//    }
-//
-//
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//
-//        Collection<GrantedAuthority> collection = new ArrayList<>();
-//
-//        collection.add(new GrantedAuthority() {
-//
-//            @Override
-//            public String getAuthority() {
-//
-//                return String.valueOf(memberRecord.getRole());
-//            }
-//        });
-//
-//        return collection;
-//    }
-//
 }
