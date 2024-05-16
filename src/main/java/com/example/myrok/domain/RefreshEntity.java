@@ -12,6 +12,7 @@ import org.springframework.data.annotation.Id;
 @Setter
 public class RefreshEntity {
 
+    @jakarta.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,4 +20,6 @@ public class RefreshEntity {
     private String username;
     private String refresh;
     private String expiration;
+
+
 }
