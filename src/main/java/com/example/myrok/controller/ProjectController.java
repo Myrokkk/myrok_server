@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Tag(name = "Project", description = "Project 관련 API 입니다.")
-@RequestMapping("myrok/project")
+@RequestMapping("/myrok/project")
 @RequiredArgsConstructor
 public class ProjectController {
 
