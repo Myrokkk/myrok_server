@@ -1,8 +1,10 @@
 package com.example.myrok.security;
 
 import com.example.myrok.domain.Member;
+import com.example.myrok.domain.UserEntity;
 import com.example.myrok.dto.MemberDto;
 import com.example.myrok.repository.MemberRepository;
+import com.example.myrok.repository.UserRepository;
 import com.example.myrok.type.Role;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -25,24 +27,26 @@ import java.util.stream.Collectors;
 @Log4j2
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final MemberRepository memberRepository;
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         log.info("----------------loadUserByUsername----------------" + username);
 
-        Member member = memberRepository.findByUsername(username);
+        UserEntity userEntity = userRepository.findByUsername(username);
 
-        if(member == null){
+        if (userEntity == null) {
             throw new UsernameNotFoundException("Not Found");
         }
 
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("TEAM MEMBER"));
+//        List<GrantedAuthority> authorities = new ArrayList<>();
+//        authorities.add(new SimpleGrantedAuthority("ROLE_TEAMMEMBER"));
+//
+//        return new MemberDto(member, authorities);
 
-        return new MemberDto(member, authorities);
-
+        return new CustomUserDetails(userEntity);
 
     }
+
 }
