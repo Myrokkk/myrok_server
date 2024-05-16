@@ -1,12 +1,10 @@
 package com.example.myrok.service;
 
-import com.example.myrok.domain.Member;
 import com.example.myrok.domain.UserEntity;
 import com.example.myrok.dto.CustomOAuth2User;
 import com.example.myrok.dto.GoogleResponse;
 import com.example.myrok.dto.OAuth2Response;
 import com.example.myrok.dto.UserDto;
-import com.example.myrok.repository.MemberRepository;
 import com.example.myrok.repository.UserRepository;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
