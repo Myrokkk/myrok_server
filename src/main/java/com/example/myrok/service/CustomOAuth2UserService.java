@@ -38,19 +38,21 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         if (registrationId.equals("google")) {
 
             oAuth2Response = new GoogleResponse(oAuth2User.getAttributes());
-        }
-        else {
+        } else {
 
             return null;
         }
 
         //리소스 서버에서 발급 받은 정보로 사용자를 특정할 아이디값을 만듬
-        String username = oAuth2Response.getProvider()+" "+oAuth2Response.getProviderId();
+        String username = oAuth2Response.getProvider() + " " + oAuth2Response.getProviderId();
         UserEntity existData = userRepository.findByUsername(username);
 
+        String role = null;
+        //처음 로그인 하는 경우
         if (existData == null) {
 
             UserEntity userEntity = new UserEntity();
+
             userEntity.setUsername(username);
             userEntity.setEmail(oAuth2Response.getEmail());
             userEntity.setName(oAuth2Response.getName());
@@ -64,8 +66,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             userDto.setRole("ROLE_TEAMMEMBER");
 
             return new CustomOAuth2User(userDto);
-        }
-        else {
+        } else {
+            //이미 로그인을 해서 정보가 있는 경우
 
             existData.setEmail(oAuth2Response.getEmail());
             existData.setName(oAuth2Response.getName());
@@ -77,8 +79,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             userDto.setName(oAuth2Response.getName());
             userDto.setRole(existData.getRole());
 
-            return new CustomOAuth2User( userDto);
+            return new CustomOAuth2User(userDto);
         }
+
+
+        //return oAuth2User;
     }
 
 }
