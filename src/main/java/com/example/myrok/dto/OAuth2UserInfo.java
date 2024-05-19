@@ -1,6 +1,7 @@
 package com.example.myrok.dto;
 
-public interface OAuth2Response {
+public interface OAuth2UserInfo {
+
 
     //제공자 (Ex. naver, google, ...)
     String getProvider();
@@ -10,5 +11,4 @@ public interface OAuth2Response {
     String getEmail();
     //사용자 실명 (설정한 이름)
     String getName();
-
 }

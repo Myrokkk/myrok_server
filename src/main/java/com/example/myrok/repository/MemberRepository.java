@@ -20,11 +20,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @EntityGraph(attributePaths = {"memberRoleList"})
     @Query("select m from Member m where m.id = :id")
-    Member getWithRoles(@Param("id") String id);
+    Member getWithRoles(@Param("id") Long id);
 
-    //Member findByName(String name);
+    boolean existsByLoginId(String loginId);
 
-    //Member findByUserName(String username);
+    Member findByLoginId(String loginId);
 
-    //Optional<Member> findByEmailAndProvider(String email, String provider);
 }

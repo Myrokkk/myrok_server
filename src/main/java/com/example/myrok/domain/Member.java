@@ -18,6 +18,7 @@ import java.util.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+//@ToString(exclude = "memberRoleList")
 public class Member {
 
     @Id
@@ -28,10 +29,10 @@ public class Member {
     private String name;
 
     @Description("소셜로그인 인증 후 받는 로그인정보")
-    @Column(name = "social_id")
-    private String socialId;
+    @Column(name = "login_id")
+    private String loginId;
 
-    @Description("랜덤 패스워드 부야")
+    @Description("랜덤 패스워드 부여")
     private String password;
 
     @Description("탈퇴한 회원, true의 경우 탈퇴한 회원")
@@ -43,7 +44,16 @@ public class Member {
     @Description("이미지 url")
     private String imgUrl;
 
+    @Builder.Default
     @OneToMany(mappedBy = "member")
-    private List<MemberProject> memberProjects;
+    private List<MemberProject> memberProjects  = new ArrayList<>();
 
+    @Enumerated(EnumType.STRING)
+    private MemberRole role;
+
+    // provider : google이 들어감
+    private String provider;
+
+    // providerId : 구굴 로그인 한 유저의 고유 ID가 들어감
+    private String providerId;
 }

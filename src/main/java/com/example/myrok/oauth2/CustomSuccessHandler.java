@@ -1,6 +1,6 @@
 package com.example.myrok.oauth2;
 
-import com.example.myrok.dto.CustomOAuth2User;
+import com.example.myrok.dto.CustomOauth2UserDetails;
 import com.example.myrok.jwt.JWTUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -29,7 +29,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
         //OAuth2User
-        CustomOAuth2User customUserDetails = (CustomOAuth2User) authentication.getPrincipal();
+        CustomOauth2UserDetails customUserDetails = (CustomOauth2UserDetails) authentication.getPrincipal();
 
         String username = customUserDetails.getName();
 

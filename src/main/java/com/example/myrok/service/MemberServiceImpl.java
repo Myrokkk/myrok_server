@@ -3,6 +3,8 @@ package com.example.myrok.service;
 import com.example.myrok.domain.Member;
 import com.example.myrok.domain.MemberProject;
 import com.example.myrok.domain.Project;
+import com.example.myrok.dto.JoinRequest;
+import com.example.myrok.dto.LoginRequest;
 import com.example.myrok.exception.CustomException;
 import com.example.myrok.repository.MemberProjectRepository;
 import com.example.myrok.repository.MemberRepository;
@@ -12,6 +14,7 @@ import com.example.myrok.type.MemberProjectType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
@@ -25,6 +28,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final ProjectRepository projectRepository;
     private final MemberProjectRepository memberProjectRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public void checkMemberHaveProject(Long memberId){
@@ -54,5 +58,54 @@ public class MemberServiceImpl implements MemberService {
         MemberProject memberProject = memberProjectRepository.findByMemberIdAndProjectIdAndMemberProjectType(memberId, projectId, MemberProjectType.PROJECT_MEMBER).orElseThrow(new CustomException(ErrorCode.MEMBER_NOT_ACCEPTABLE, HttpStatus.NOT_ACCEPTABLE));
         memberProject.changeMemberProjectType(MemberProjectType.NON_PROJECT_MEMBER);
         return memberProjectRepository.save(memberProject).getId();
+    }
+
+
+    public boolean checkLoginIdDuplicate(String loginId){
+        return memberRepository.existsByLoginId(loginId);
+    }
+
+
+    public void join(JoinRequest joinRequest) {
+        memberRepository.save(joinRequest.toEntity());
+    }
+
+    public void securityJoin(JoinRequest joinRequest){
+        if(memberRepository.existsByLoginId(joinRequest.getLoginId())){
+            return;
+        }
+
+        joinRequest.setPassword(bCryptPasswordEncoder.encode(joinRequest.getPassword()));
+
+        memberRepository.save(joinRequest.toEntity());
+    }
+
+    public Member login(LoginRequest loginRequest) {
+        Member findMember = memberRepository.findByLoginId(loginRequest.getLoginId());
+
+        if(findMember == null){
+            return null;
+        }
+
+        if (!bCryptPasswordEncoder.matches(loginRequest.getPassword(), findMember.getPassword())) {
+            return null;
+        }
+
+        return findMember;
+    }
+
+    public Member getLoginMemberById(Long memberId){
+        if(memberId == null) return null;
+
+        Optional<Member> findMember = memberRepository.findById(memberId);
+        return findMember.orElse(null);
+
+    }
+
+    public Member getLoginMemberByLoginId(String loginId){
+        if(loginId == null) return null;
+
+        return memberRepository.findByLoginId(loginId);
+
     }
 }
