@@ -56,4 +56,25 @@ public class Member {
 
     // providerId : 구굴 로그인 한 유저의 고유 ID가 들어감
     private String providerId;
+
+    @Column(nullable = false)
+    private String email;
+
+    @Column
+    private String picture;
+
+    @Builder
+    public Member(String name, String email, String picture, MemberRole role) {
+        this.name = name;
+        this.email = email;
+        this.picture = picture;
+        this.role = role;
+    }
+
+    public Member update(String name, String picture) {
+        this.name = name;
+        this.picture = picture;
+
+        return this;
+    }
 }

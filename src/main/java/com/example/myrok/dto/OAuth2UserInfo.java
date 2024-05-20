@@ -1,7 +1,8 @@
 package com.example.myrok.dto;
 
-public interface OAuth2UserInfo {
+import java.util.Map;
 
+public interface OAuth2UserInfo {
 
     //제공자 (Ex. naver, google, ...)
     String getProvider();

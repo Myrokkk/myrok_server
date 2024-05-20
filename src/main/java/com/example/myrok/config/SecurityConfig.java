@@ -3,7 +3,7 @@ package com.example.myrok.config;
 
 import com.example.myrok.domain.MemberRole;
 import com.example.myrok.oauth2.CustomSuccessHandler;
-import com.example.myrok.repository.RefreshRepository;
+//import com.example.myrok.repository.RefreshRepository;
 import com.example.myrok.service.CustomOauth2UserService;
 import com.example.myrok.jwt.JWTUtil;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +35,7 @@ public class SecurityConfig {
     private final CustomSuccessHandler customSuccessHandler;
     private final JWTUtil jwtUtil;
     private final AuthenticationConfiguration authenticationConfiguration;
-    private final RefreshRepository refreshRepository;
+    //private final RefreshRepository refreshRepository;
 
 
     @Bean
