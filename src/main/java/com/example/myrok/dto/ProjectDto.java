@@ -7,6 +7,7 @@ import jdk.jfr.Description;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class ProjectDto {
     @Data
@@ -39,6 +40,15 @@ public class ProjectDto {
         private Long projectId;
         @NonNull
         private Long memberId;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @Builder
+    @AllArgsConstructor
+    @ToString
+    public static class ProjectMembersDto{
+        private List<MemberDto.MemberNameDto> projectMemberNames;
     }
 
 }

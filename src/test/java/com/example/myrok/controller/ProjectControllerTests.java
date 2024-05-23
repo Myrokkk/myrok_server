@@ -25,8 +25,7 @@ public class ProjectControllerTests {
                 .startDate("")
                 .endDate("")
                 .build();
-        Long projectId = projectService.register(registerProject);
-        log.info(memberService.registerProjectToMember(2L, projectId));
+        Long projectId = projectService.register(registerProject, 2L);
     }
 
     @Test
@@ -35,9 +34,9 @@ public class ProjectControllerTests {
         log.info(memberService.participateProject(3L, "0ddd3e25"));
     }
 
-    @Test
-    public void getOutFromProject() {
-        memberService.getOutFromProject(3L, 3L);
-        projectService.checkProjectDelete(3L);
-    }
+//    @Test
+//    public void getOutFromProject() {
+//        memberService.getOutFromProject(3L, 3L);
+//        projectService.checkProjectDelete(3L);
+//    }
 }

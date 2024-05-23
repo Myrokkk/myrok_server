@@ -36,8 +36,6 @@ public class QProject extends EntityPathBase<Project> {
     //inherited
     public final DatePath<java.time.LocalDate> lastModifiedDate = _super.lastModifiedDate;
 
-    public final NumberPath<Integer> limitMember = createNumber("limitMember", Integer.class);
-
     public final ListPath<MemberProject, QMemberProject> memberProjects = this.<MemberProject, QMemberProject>createList("memberProjects", MemberProject.class, QMemberProject.class, PathInits.DIRECT2);
 
     public final StringPath projectName = createString("projectName");

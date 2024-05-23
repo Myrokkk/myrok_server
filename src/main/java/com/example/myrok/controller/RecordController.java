@@ -3,6 +3,8 @@ package com.example.myrok.controller;
 import com.example.myrok.domain.Record;
 import com.example.myrok.dto.ClovaDto;
 import com.example.myrok.dto.RecordDTO;
+import com.example.myrok.dto.RecordResponseDTO;
+import com.example.myrok.dto.RecordUpdateDTO;
 import com.example.myrok.service.RecordService;
 import com.example.myrok.service.openapi.RecordSummaryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,9 +32,9 @@ public class RecordController {
     public void save(){}
 
     @PostMapping("/records")
-    public ResponseEntity<Record> save( @Valid @RequestBody RecordDTO recordDTO){
+    public ResponseEntity<Long> save( @RequestBody @Valid RecordDTO recordDTO){
         Record savedRecord=recordService.save(recordDTO);
-        return new ResponseEntity<>(savedRecord, HttpStatus.CREATED);
+        return new ResponseEntity<>(savedRecord.getId(), HttpStatus.CREATED);
     }
 
     @PostMapping("/delete/{recordId}")
@@ -38,6 +42,13 @@ public class RecordController {
         recordService.deleteUpdate(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/records/{recordId}")
+    public ResponseEntity<Long> update( @PathVariable("recordId") Long recordId, @RequestBody @Valid RecordUpdateDTO recordUpdatedDTO){
+        Record updatedRecord=recordService.update(recordId,recordUpdatedDTO);
+        return new ResponseEntity<>(updatedRecord.getId(), HttpStatus.CREATED);
+    }
+
 
     @Operation(
             summary = "회의록을 요약합니다.",

@@ -9,10 +9,13 @@ import java.time.LocalDate;
 @Transactional
 public interface ProjectService {
     //프로젝트 등록
-    Long register(ProjectDto.RegisterProject requestDto);
+    Long register(ProjectDto.RegisterProject requestDto, Long memberId);
 
     Long checkProjectDelete(Long projectId);
 
+    String getInviteCode(Long projectId);
+
+    ProjectDto.ProjectMembersDto getProjectMembers(Long projectId);
 
     default Project dtoToEntity(ProjectDto.RegisterProject projectDto){
         return Project.builder()

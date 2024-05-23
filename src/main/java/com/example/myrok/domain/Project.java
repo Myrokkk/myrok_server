@@ -44,10 +44,6 @@ public class Project extends BaseTimeEntity{
     @Description("프로젝트 마감 일자")
     private LocalDate endDate;
 
-    @Column(name = "limit_member")
-    @Builder.Default
-    private int limitMember = 6;
-
     @Column(name = "invite_code")
     @Description("초대코드")
     @Builder.Default
@@ -55,6 +51,7 @@ public class Project extends BaseTimeEntity{
 
     @Description("프로젝트 소속 회의록")
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Builder.Default
     private List<Record> record = new ArrayList<>();
 
     @OneToMany(mappedBy = "project")

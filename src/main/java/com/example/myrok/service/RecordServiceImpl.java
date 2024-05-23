@@ -4,9 +4,12 @@ import com.example.myrok.event.RecordSavedEvent;
 import com.example.myrok.domain.*;
 import com.example.myrok.domain.Record;
 import com.example.myrok.dto.RecordDTO;
+import com.example.myrok.dto.RecordResponseDTO;
+import com.example.myrok.dto.RecordUpdateDTO;
 import com.example.myrok.exception.CustomException;
 import com.example.myrok.repository.*;
 import com.example.myrok.type.ErrorCode;
+import com.example.myrok.type.Role;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
@@ -15,7 +18,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import static com.example.myrok.type.MemberProjectType.PROJECT_MEMBER;
 
 @RequiredArgsConstructor
@@ -34,7 +40,8 @@ public class RecordServiceImpl implements RecordService{
     @Autowired
     private MemberRecordService memberRecordService;
     @Autowired
-    private TagService tagService;
+    private MemberRecordRepository memberRecordRepository;
+
 
     private final ApplicationEventPublisher eventPublisher;
 
@@ -71,7 +78,7 @@ public class RecordServiceImpl implements RecordService{
 
         // Tag 저장
         for (String tagName : tags) {
-            tagService.save(tagName);
+            recordTagService.save(projectId,savedRecord,tagName);
         }
 
         memberRecordService.save(members,savedRecord,recordWriterId);
@@ -84,18 +91,15 @@ public class RecordServiceImpl implements RecordService{
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void deleteUpdate(Long recorId) {
+    public void deleteUpdate(Long recordId) {
         // 회의록 삭제
-        Record record = recordRepository.findById(recorId)
-                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 회의록입니다. id: " + recorId));
+        Record record = recordRepository.findById(recordId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 회의록입니다. id: " + recordId));
         if (record.getDeleted()) {
             throw new CustomException(ErrorCode.DELETED_RECORD_CODE, HttpStatus.BAD_REQUEST);
         }
         record.delete();
         recordRepository.save(record);
-
-        //회의록 안의 태그 리스트 삭제
-        tagService.delete(record.getRecordTagList());
 
         //MemberRecord 매핑객체 삭제
         memberRecordService.delete(record.getId());
@@ -104,4 +108,40 @@ public class RecordServiceImpl implements RecordService{
         recordTagService.delete(record.getId());
 
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public Record update(Long recordId, RecordUpdateDTO recordUpdateDTO) {
+        List<String> updatedTags = recordUpdateDTO.tagList();
+        Long recordWriterId = recordUpdateDTO.recordWriterId();
+        Record record = recordRepository.findById(recordId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 회의록입니다. id: " + recordId));
+        //삭제된 회의록이라면 예외
+        if(record.getDeleted()){
+            throw new CustomException(ErrorCode.DELETED_RECORD_CODE, HttpStatus.BAD_REQUEST);
+        }
+        //회의 참여자가 아니라면 예외
+        MemberRecord memberRecord =memberRecordRepository.findByMemberIdAndRecordIdAndDeletedIsFalse(recordWriterId,recordId)
+                .orElseThrow(() -> new CustomException(ErrorCode.WRONG_RECORD_ACCESS, HttpStatus.BAD_REQUEST));
+        //작성자 외 수정 시도시 예외
+        if (memberRecord.getRole()!=Role.ADMIN){
+            throw new CustomException(ErrorCode.WRONG_UPDATE_ACCESS, HttpStatus.BAD_REQUEST);
+        }
+        //수정 로직
+
+        //이전 태그들 삭제
+        recordTagService.delete(record.getId());
+
+        List<RecordTag> updateRecordTagList = new ArrayList<>();
+        for (String tagName : updatedTags) {
+            updateRecordTagList.add(recordTagService.save(record.getProject().getId(),record,tagName));
+        }
+
+        record.setRecordName(recordUpdateDTO.recordName());
+        record.setRecordTagList(updateRecordTagList);
+
+        return recordRepository.save(record);
+    }
+
+
 }

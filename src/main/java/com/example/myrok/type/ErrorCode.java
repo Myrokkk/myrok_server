@@ -11,6 +11,8 @@ public enum ErrorCode implements EnumModel{
     // COMMON
     RESOURCE_NOT_FOUND(40400, "C001", "존재하지 않습니다."),
     INSUFFICIENT_VALID(40002, "C002", "불충분한 문장입니다."),
+    INVALID_REQUEST_FORMAT(40003,"C003","회의록 형식이 잘못되었습니다."),
+
     //project
     MEMBER_IN_PROJECT(40600, "P001", "기존 프로젝트에서 나간 후 진행해주세요."),
     LIMITED_MEMBER(40601, "P002", "프로젝트 인원이 초과되었습니다."),
@@ -20,6 +22,8 @@ public enum ErrorCode implements EnumModel{
     NON_PROJECT_MEMBER_ERROR(40100,"P006","탈퇴된 멤버입니다."),
     // record
     DELETED_RECORD_CODE(40402,"R001","이미 삭제된 회의록입니다."),
+    WRONG_UPDATE_ACCESS(40604,"R002","회의록 수정은 작성자만 가능합니다."),
+    WRONG_RECORD_ACCESS(40605,"R003","회의 참여자가 아닙니다."),
     // tag
     DELETED_TAG_CODE(40403,"T001","이미 삭제된 태그입니다."),
     // memberRecord

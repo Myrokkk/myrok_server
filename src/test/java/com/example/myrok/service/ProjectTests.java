@@ -28,8 +28,12 @@ public class ProjectTests {
                 .startDate("")
                 .endDate("")
                 .build();
-        Long projectId = projectService.register(projectDto);
-        Long project = memberService.registerProjectToMember(1L, projectId);
-        log.info(project);
+        Long projectId = projectService.register(projectDto, 1L);
+    }
+
+    @Test
+    public void testGetMembersByProjectId(){
+        ProjectDto.ProjectMembersDto projectMembersDto = projectService.getProjectMembers(4L);
+        log.info(projectMembersDto);
     }
 }

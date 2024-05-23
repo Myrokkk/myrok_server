@@ -3,7 +3,6 @@ package com.example.myrok.service;
 import com.example.myrok.domain.*;
 import com.example.myrok.domain.Record;
 import com.example.myrok.exception.CustomException;
-import com.example.myrok.exception.NotFoundException;
 import com.example.myrok.repository.MemberProjectRepository;
 import com.example.myrok.repository.MemberRecordRepository;
 import com.example.myrok.repository.MemberRepository;
@@ -32,14 +31,12 @@ public class MemberRecordServiceImpl implements MemberRecordService{
         for (Long memberId : members) {
             Member member = memberRepository.findById(memberId)
                     .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 멤버입니다. id: " + memberId));
-            // 멤버가 소속된 프로젝트가 있는지 확인
-            MemberProject memberProject=memberProjectRepository.findByMember(member)
-                    .orElseThrow(() -> new EntityNotFoundException("소속된 프로젝트가 없는 멤버입니다. id: " + memberId));
-            // 멤버가 해당 프로젝트 소속인지 확인
-            if(!record.getProject().getId().equals(memberProject.getProject().getId())
-            || memberProject.getMemberProjectType()== MemberProjectType.NON_PROJECT_MEMBER){
-                throw new CustomException(ErrorCode.MEMBER_NOT_IN_PROJECT, HttpStatus.BAD_REQUEST);
-            }
+
+            // 멤버가 프로젝트 소속인지 확인
+            Long projectId = record.getProject().getId();
+            MemberProject memberProject =
+                    memberProjectRepository.findByMemberIdAndProjectIdAndMemberProjectType(memberId,projectId,MemberProjectType.PROJECT_MEMBER)
+                            .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_IN_PROJECT, HttpStatus.BAD_REQUEST));
             // 멤버별 권한 부여
             Role role = memberId.equals(recordWriterId) ? Role.ADMIN : Role.PARTICIPANT;
             MemberRecord memberRecord = MemberRecord.builder()

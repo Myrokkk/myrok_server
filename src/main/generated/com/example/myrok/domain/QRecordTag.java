@@ -26,9 +26,11 @@ public class QRecordTag extends EntityPathBase<RecordTag> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final NumberPath<Long> projectId = createNumber("projectId", Long.class);
+
     public final QRecord record;
 
-    public final QTag tag;
+    public final StringPath tagName = createString("tagName");
 
     public QRecordTag(String variable) {
         this(RecordTag.class, forVariable(variable), INITS);
@@ -49,7 +51,6 @@ public class QRecordTag extends EntityPathBase<RecordTag> {
     public QRecordTag(Class<? extends RecordTag> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.record = inits.isInitialized("record") ? new QRecord(forProperty("record"), inits.get("record")) : null;
-        this.tag = inits.isInitialized("tag") ? new QTag(forProperty("tag")) : null;
     }
 
 }

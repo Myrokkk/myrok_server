@@ -23,9 +23,9 @@ public class RecordTag {
     @JoinColumn(name = "r_id")
     private Record record;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "t_id")
-    private Tag tag;
+    private Long projectId;
+
+    private String tagName;
 
     @Description("RecordTag 매핑 삭제")
     @Column(name = "is_deleted")

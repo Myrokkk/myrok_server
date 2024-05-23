@@ -19,7 +19,7 @@ public class MemberProject {
     @Column(name = "mp_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "m_id")
     private Member member;
     @ManyToOne(fetch = FetchType.LAZY)
