@@ -33,9 +33,7 @@ public interface MemberService {
     public Member getLoginMemberByLoginId(String loginId);
 
     UserDetails loadUserByUsername(String username);
-<<<<<<< HEAD
 
     public MemberProjectResponse getParticipatedMemberProject(String email);
-=======
->>>>>>> b37d6d3 (feat: 본인 정보 조회)
+
 }

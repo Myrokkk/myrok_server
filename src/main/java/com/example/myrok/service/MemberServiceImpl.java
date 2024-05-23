@@ -3,13 +3,10 @@ package com.example.myrok.service;
 import com.example.myrok.domain.Member;
 import com.example.myrok.domain.MemberProject;
 import com.example.myrok.domain.Project;
-<<<<<<< HEAD
 import com.example.myrok.dto.*;
-=======
 import com.example.myrok.dto.CustomOauth2UserDetails;
 import com.example.myrok.dto.JoinRequest;
 import com.example.myrok.dto.LoginRequest;
->>>>>>> b37d6d3 (feat: 본인 정보 조회)
 import com.example.myrok.exception.CustomException;
 import com.example.myrok.repository.MemberProjectRepository;
 import com.example.myrok.repository.MemberRepository;
@@ -128,7 +125,6 @@ public class MemberServiceImpl implements MemberService {
     public Member getMemberInformation(String email) {
         return memberRepository.findUserByEmail(email);
     }
-<<<<<<< HEAD
 
     public MemberProjectResponse getParticipatedMemberProject(String email) {
         final Member member = memberRepository.findUserByEmail(email);
@@ -138,7 +134,5 @@ public class MemberServiceImpl implements MemberService {
         return MemberProjectResponse.of((MemberProject) allByMemberId);
     }
 
-=======
->>>>>>> b37d6d3 (feat: 본인 정보 조회)
 }
 
