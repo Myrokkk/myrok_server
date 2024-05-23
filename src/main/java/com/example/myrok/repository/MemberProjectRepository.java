@@ -17,4 +17,5 @@ public interface MemberProjectRepository extends JpaRepository<MemberProject, Lo
     Optional<MemberProject> findByMemberIdAndProjectId(Long memberId, Long projectId);
     Optional<MemberProject> findByMemberIdAndProjectIdAndMemberProjectType(Long memberId, Long projectId, MemberProjectType memberProjectType);
     List<MemberProject> findAllByProjectIdAndMemberProjectType(Long projectId, MemberProjectType memberProjectType);
+    List<MemberProject> findAllByMember(Member member);
 }

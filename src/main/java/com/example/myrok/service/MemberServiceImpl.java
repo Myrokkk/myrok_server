@@ -3,9 +3,7 @@ package com.example.myrok.service;
 import com.example.myrok.domain.Member;
 import com.example.myrok.domain.MemberProject;
 import com.example.myrok.domain.Project;
-import com.example.myrok.dto.CustomOauth2UserDetails;
-import com.example.myrok.dto.JoinRequest;
-import com.example.myrok.dto.LoginRequest;
+import com.example.myrok.dto.*;
 import com.example.myrok.exception.CustomException;
 import com.example.myrok.repository.MemberProjectRepository;
 import com.example.myrok.repository.MemberRepository;
@@ -21,8 +19,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -122,4 +122,14 @@ public class MemberServiceImpl implements MemberService {
     public Member getMemberInformation(String email) {
         return memberRepository.findUserByEmail(email);
     }
+
+    public MemberProjectResponse getParticipatedMemberProject(String email) {
+        final Member member = memberRepository.findUserByEmail(email);
+
+        final List<MemberProject> allByMemberId = memberProjectRepository.findAllByMember(member);
+
+        return MemberProjectResponse.of((MemberProject) allByMemberId);
+    }
+
 }
+

@@ -3,6 +3,8 @@ package com.example.myrok.service;
 import com.example.myrok.domain.Member;
 import com.example.myrok.dto.JoinRequest;
 import com.example.myrok.dto.LoginRequest;
+import com.example.myrok.dto.MemberProjectResponse;
+import com.example.myrok.dto.MemberProjectsResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -31,4 +33,6 @@ public interface MemberService {
     public Member getLoginMemberByLoginId(String loginId);
 
     UserDetails loadUserByUsername(String username);
+
+    public MemberProjectResponse getParticipatedMemberProject(String email);
 }

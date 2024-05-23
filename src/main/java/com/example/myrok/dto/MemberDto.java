@@ -28,4 +28,15 @@ public class MemberDto{
         private Long memberId;
         private String name;
     }
+
+    @Data
+    @NoArgsConstructor
+    @Builder
+    @AllArgsConstructor
+    @ToString
+    public static class MemberProjectDto{
+        private Long memberId;
+        private String name;
+        private List<MemberProject> memberProjects  = new ArrayList<>();
+    }
 }

@@ -2,14 +2,12 @@ package com.example.myrok.domain;
 
 import com.example.myrok.type.MemberProjectType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "tb_member_project")
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
