@@ -32,7 +32,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.hibernate.validator:hibernate-validator:6.2.0.Final'
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
 
     testCompileOnly 'org.projectlombok:lombok'
     compileOnly 'org.projectlombok:lombok'
@@ -57,21 +56,13 @@ dependencies {
             "jakarta.annotation:jakarta.annotation-api",
             "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta")
 
-    // https://mvnrepository.com/artifact/net.coobird/thumbnailator
-    implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.20'
 
     //swagger
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 //    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'com.vaadin.external.google:android-json:0.0.20131108.vaadin1'
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
-    implementation 'commons-beanutils:commons-beanutils:1.9.4'
+    implementation 'org.jsoup:jsoup:1.15.3'
 
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    testImplementation 'org.springframework.security:spring-security-test'
-
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 }
 
 tasks.named('test') {

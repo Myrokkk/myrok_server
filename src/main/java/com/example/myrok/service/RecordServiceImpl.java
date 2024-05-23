@@ -82,7 +82,6 @@ public class RecordServiceImpl implements RecordService{
         }
 
         memberRecordService.save(members,savedRecord,recordWriterId);
-        recordTagService.save(tags,savedRecord);
 
         eventPublisher.publishEvent(new RecordSavedEvent(savedRecord));
 

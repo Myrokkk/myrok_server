@@ -11,6 +11,8 @@ public class ClovaDto {
     public static class RecordRequestDto{
         //회의록 아이디
         private Long id;
+        //String으로 변경한 text
+
     }
 
     @Data
