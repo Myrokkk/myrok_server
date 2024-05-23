@@ -4,6 +4,7 @@ import com.example.myrok.domain.Member;
 import com.example.myrok.dto.JoinRequest;
 import com.example.myrok.dto.LoginRequest;
 import jakarta.transaction.Transactional;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Transactional
 public interface MemberService {
@@ -14,6 +15,8 @@ public interface MemberService {
     Long participateProject(Long memberId, String inviteCode);
 
     Long getOutFromProject(Long memberId, Long projectId);
+
+    public Member getMemberInformation(String email);
 
     public boolean checkLoginIdDuplicate(String loginId);
 
@@ -26,4 +29,6 @@ public interface MemberService {
     public Member getLoginMemberById(Long memberId);
 
     public Member getLoginMemberByLoginId(String loginId);
+
+    UserDetails loadUserByUsername(String username);
 }

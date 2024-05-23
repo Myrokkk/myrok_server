@@ -15,10 +15,10 @@ import java.util.*;
 @Entity
 @Table(name = "tb_member")
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-//@ToString(exclude = "memberRoleList")
 public class Member {
 
     @Id
@@ -77,4 +77,5 @@ public class Member {
 
         return this;
     }
+
 }
