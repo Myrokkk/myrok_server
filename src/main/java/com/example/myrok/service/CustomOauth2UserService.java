@@ -3,7 +3,6 @@ package com.example.myrok.service;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -15,8 +14,6 @@ import com.example.myrok.domain.Member;
 import com.example.myrok.domain.MemberRole;
 import com.example.myrok.dto.*;
 import com.example.myrok.repository.MemberRepository;
-
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -69,6 +66,6 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
             member = findMember;
         }
 
-        return new CustomOauth2UserDetails(member, oAuth2User.getAttributes());
+        return new CustomOauth2UserDetails(member);
     }
 }

@@ -15,10 +15,10 @@ public class CustomOauth2UserDetails implements UserDetails, OAuth2User {
     private final Member member;
     private Map<String, Object> attributes;
 
-    public CustomOauth2UserDetails(Member member, Map<String, Object> attributes) {
+    public CustomOauth2UserDetails(Member member) {
 
         this.member = member;
-        this.attributes = attributes;
+        //this.attributes = attributes;
     }
 
 
