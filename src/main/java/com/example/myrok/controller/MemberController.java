@@ -21,7 +21,7 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/api/me")
+    @GetMapping("/myrok/me/{email}")
     public ResponseEntity<Member> getMyInformation(@PathVariable String email) {
 
         return ResponseEntity.ok().body(memberService.getMemberInformation(email));
