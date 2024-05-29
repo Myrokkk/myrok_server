@@ -31,6 +31,8 @@ public class MemberControllerTests {
         Member fakeMember = new Member();
         fakeMember.setEmail(email);
         fakeMember.setName("Hong GilDong"); // 예시로 이름 설정
+        fakeMember.setId(Long.valueOf("1"));
+        fakeMember.setPicture("https://lh3.googleusercontent.com/…");
 
         // MemberService의 가짜 응답 설정
         when(memberService.getMemberInformation(email)).thenReturn(fakeMember);

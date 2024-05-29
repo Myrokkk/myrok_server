@@ -20,4 +20,12 @@ public record MemberProjectResponse(
                 memberProject.getProject().getEndDate()
         );
     }
+
+    public List<MemberProjectResponse> memberProject() {
+        return memberProject();
+
+    }
+
+
+
 }

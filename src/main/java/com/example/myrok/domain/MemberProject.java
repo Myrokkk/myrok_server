@@ -35,6 +35,11 @@ public class MemberProject {
     public void changeMemberProjectType(MemberProjectType memberProjectType) {
         this.memberProjectType = memberProjectType;
     }
+
+
+    public String getProjectName() {
+        return project.getProjectName();
+    }
 }
 
 //    public MemberProject getMemberProject() {
