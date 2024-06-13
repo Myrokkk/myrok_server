@@ -12,4 +12,6 @@ import java.util.List;
 public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("SELECT m.name FROM Member m WHERE m.id =:id")
     String findNameById(@Param("id")Long id);
+
+    Member findUserByEmail(String email);
 }

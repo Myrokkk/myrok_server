@@ -11,6 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "tb_member")
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

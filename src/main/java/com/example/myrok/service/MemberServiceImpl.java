@@ -3,6 +3,7 @@ package com.example.myrok.service;
 import com.example.myrok.domain.Member;
 import com.example.myrok.domain.MemberProject;
 import com.example.myrok.domain.Project;
+import com.example.myrok.dto.MemberProjectResponse;
 import com.example.myrok.exception.CustomException;
 import com.example.myrok.repository.MemberProjectRepository;
 import com.example.myrok.repository.MemberRepository;
@@ -14,6 +15,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -54,5 +56,18 @@ public class MemberServiceImpl implements MemberService {
         MemberProject memberProject = memberProjectRepository.findByMemberIdAndProjectIdAndMemberProjectType(memberId, projectId, MemberProjectType.PROJECT_MEMBER).orElseThrow(new CustomException(ErrorCode.MEMBER_NOT_ACCEPTABLE, HttpStatus.NOT_ACCEPTABLE));
         memberProject.changeMemberProjectType(MemberProjectType.NON_PROJECT_MEMBER);
         return memberProjectRepository.save(memberProject).getId();
+    }
+
+
+    public Member getMemberInformation(String email) {
+        return memberRepository.findUserByEmail(email);
+    }
+
+    public MemberProjectResponse getParticipatedMemberProject(String email) {
+        final Member member = memberRepository.findUserByEmail(email);
+
+        final List<MemberProject> allByMemberId = memberProjectRepository.findAllByMember(member);
+
+        return MemberProjectResponse.of((MemberProject) allByMemberId);
     }
 }

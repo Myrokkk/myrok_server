@@ -1,5 +1,7 @@
 package com.example.myrok.service;
 
+import com.example.myrok.domain.Member;
+import com.example.myrok.dto.MemberProjectResponse;
 import jakarta.transaction.Transactional;
 
 @Transactional
@@ -11,4 +13,8 @@ public interface MemberService {
     Long participateProject(Long memberId, String inviteCode);
 
     Long getOutFromProject(Long memberId, Long projectId);
+
+    public Member getMemberInformation(String email);
+
+    public MemberProjectResponse getParticipatedMemberProject(String email);
 }
