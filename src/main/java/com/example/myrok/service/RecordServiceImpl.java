@@ -203,7 +203,7 @@ public class RecordServiceImpl implements RecordService{
 
     @Override
     public List<RecordDTO.RecordListObject> getRecords(Long projectId) {
-        List<Record> recordList = recordRepository.findAllByProjectId(projectId);
+        List<Record> recordList = recordRepository.findAllByProjectIdAndDeletedIsFalse(projectId);
         return recordList.stream()
                 .map(record -> {
                     Member member = memberRepository.findById(record.getRecordWriterId()).orElseThrow(NoSuchElementException::new);

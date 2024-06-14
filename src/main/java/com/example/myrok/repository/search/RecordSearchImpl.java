@@ -33,7 +33,7 @@ public class RecordSearchImpl extends QuerydslRepositorySupport implements Recor
         QRecordTag recordTag = QRecordTag.recordTag;
 
         JPQLQuery<Record> query = from(record);
-        query.where(record.project.id.eq(projectId));
+        query.where(record.project.id.eq(projectId).and(record.deleted.eq(false)));
 
         if (searchValue!= null &&!searchValue.isEmpty()) {
             query.where(record.recordName.like("%" + searchValue + "%"));

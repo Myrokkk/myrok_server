@@ -66,7 +66,7 @@ public class RecordController {
             responseCode = "200",
             description = "제목 혹은 태그명에 따른 회의록 목록을 가져옵니다."
     )
-    @GetMapping("/myrok/{projectId}/list")
+    @GetMapping("/{projectId}/list")
     public ResponseEntity<List<com.example.myrok.dto.classtype.RecordDTO.RecordListObject>> getRecordsByProjectNameOrTagName(@PathVariable Long projectId, @RequestParam(value = "recordName", required = false) String recordName, @RequestParam(value = "tagName", required = false) String tagName){
         return new ResponseEntity<>(recordService.getRecordsBySearch(recordName, tagName, projectId), HttpStatus.OK);
     }
@@ -92,7 +92,7 @@ public class RecordController {
             responseCode = "200",
             description = "제목 혹은 태그명에 따른 회의록 목록을 페이징 처리하여 가져옵니다."
     )
-    @GetMapping("/myrok/{projectId}/list/pagination")
+    @GetMapping("/{projectId}/list/pagination")
     public ResponseEntity<PageResponseDto<com.example.myrok.dto.classtype.RecordDTO.RecordListObject>> getRecordsPaginationByProjectNameOrTagName(PageRequestDto pageRequestDto, @PathVariable Long projectId, @RequestParam(value = "recordName", required = false) String recordName, @RequestParam(value = "tagName", required = false) String tagName){
         return new ResponseEntity<>(recordService.getRecordsBySearch(pageRequestDto, recordName, tagName, projectId), HttpStatus.OK);
     }

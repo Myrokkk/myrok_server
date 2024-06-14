@@ -47,7 +47,7 @@ public class ProjectController {
             description = "프로젝트 초대코드를 가져옵니다."
     )
     @GetMapping("/{projectId}")
-    public ResponseEntity<String> getInviteCode(@PathVariable Long projectId) {
+    public ResponseEntity<ProjectDTO.ParticipateProject> getInviteCode(@PathVariable Long projectId) {
         return ResponseEntity.ok().body(projectService.getInviteCode(projectId));
     }
 

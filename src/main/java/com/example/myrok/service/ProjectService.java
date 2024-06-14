@@ -14,7 +14,7 @@ public interface ProjectService {
     Long checkProjectDelete(Long projectId);
 
     ProjectDTO.ProjectMembersDto getProjectMembers(Long projectId);
-    String getInviteCode(Long projectId);
+    ProjectDTO.ParticipateProject getInviteCode(Long projectId);
 
     default Project dtoToEntity(ProjectDTO.RegisterProject projectDto){
         return Project.builder()

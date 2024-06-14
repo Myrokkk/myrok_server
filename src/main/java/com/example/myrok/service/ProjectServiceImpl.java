@@ -76,8 +76,10 @@ public class ProjectServiceImpl implements ProjectService{
 
 
     @Override
-    public String getInviteCode(Long projectId) {
+    public ProjectDTO.ParticipateProject getInviteCode(Long projectId) {
         Project project = projectRepository.findById(projectId).orElseThrow(NoSuchElementException::new);
-        return project.getInviteCode();
+        return ProjectDTO.ParticipateProject.builder()
+                .inviteCode(project.getInviteCode())
+                .build();
     }
 }

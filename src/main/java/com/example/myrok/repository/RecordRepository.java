@@ -16,11 +16,11 @@ import java.util.List;
 public interface RecordRepository extends JpaRepository<Record, Long>, RecordSearch {
 
 
-    List<Record> findAllByProjectId(@Param("projectId") Long projectId);
+    List<Record> findAllByProjectIdAndDeletedIsFalse(@Param("projectId") Long projectId);
 
-    @Query("SELECT r FROM Record r INNER JOIN RecordTag rt ON rt.record.id = r.id WHERE r.project.id = :projectId AND (:recordName IS NULL OR r.recordName LIKE %:recordName%) AND (:tagName IS NULL OR rt.tagName LIKE %:tagName%)")
+    @Query("SELECT r FROM Record r INNER JOIN RecordTag rt ON rt.record.id = r.id WHERE r.project.id = :projectId AND r.deleted = false AND (:recordName IS NULL OR r.recordName LIKE %:recordName%) AND (:tagName IS NULL OR rt.tagName LIKE %:tagName%)")
     List<Record> findAllBySearch(@Param("projectId") Long projectId, @Param("recordName") String recordName, @Param("tagName") String tagName);
 
-    @Query("SELECT r FROM Record r WHERE r.project.id = :projectId")
+    @Query("SELECT r FROM Record r WHERE r.project.id = :projectId AND r.deleted = false ")
     Page<Object> selectList(Pageable Pageablepageable, @Param("projectId") Long projectId);
 }
